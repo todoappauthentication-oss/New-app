@@ -16,7 +16,7 @@ import {
   Send,
   Search,
   PlusSquare,
-  MoreHorizontal,
+  MoreVertical, // Changed to Vertical for AM style
   Bookmark,
   X,
   Check,
@@ -26,7 +26,9 @@ import {
   Pause,
   Volume2,
   VolumeX,
-  Edit2
+  Edit2,
+  Zap, // For "Effects" or "Tutorials" icon
+  Layers // For "Projects" icon look
 } from 'lucide-react';
 
 import { 
@@ -122,8 +124,8 @@ const CustomVideoPlayer: React.FC<{ src: string, onDoubleTap: () => void }> = ({
       {/* Center Play Button Overlay */}
       {!isPlaying && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-          <div className="bg-black/50 p-4 rounded-full backdrop-blur-sm">
-            <Play size={32} fill="white" className="text-white ml-1" />
+          <div className="bg-am-surface/80 p-4 rounded-full backdrop-blur-sm border border-am-teal/20">
+            <Play size={32} className="text-am-teal ml-1" fill="currentColor" />
           </div>
         </div>
       )}
@@ -137,7 +139,7 @@ const CustomVideoPlayer: React.FC<{ src: string, onDoubleTap: () => void }> = ({
             exit={{ scale: 0, opacity: 0 }}
             className="absolute inset-0 flex items-center justify-center pointer-events-none"
           >
-            <Heart size={80} fill="white" className="text-white drop-shadow-lg" />
+            <Heart size={80} fill="#00D2BE" className="text-am-teal drop-shadow-lg" />
           </motion.div>
         )}
       </AnimatePresence>
@@ -210,14 +212,18 @@ const AuthView: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-black text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen p-6 bg-am-bg text-white">
       <motion.div 
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-sm space-y-8"
       >
         <div className="text-center mt-10">
-          <h1 className="text-4xl font-bold font-serif italic mb-2">AlightGram</h1>
+          <div className="w-20 h-20 bg-am-surface rounded-2xl mx-auto mb-4 flex items-center justify-center border border-am-teal shadow-[0_0_15px_rgba(0,210,190,0.3)]">
+             <div className="w-10 h-10 border-4 border-am-teal rounded-tr-xl rounded-bl-xl rotate-45"></div>
+          </div>
+          <h1 className="text-3xl font-extrabold tracking-tight">Alight<span className="text-am-teal">Gram</span></h1>
+          <p className="text-am-subtext text-sm mt-2">Motion Creative Community</p>
         </div>
 
         <div className="space-y-3">
@@ -226,45 +232,45 @@ const AuthView: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
           <div className="space-y-2">
             {isSignUp && (
               <input 
-                className="w-full bg-[#121212] border border-[#333] p-3 rounded text-white text-sm focus:border-gray-500 outline-none" 
+                className="w-full bg-am-surface border border-am-gray p-3 rounded-lg text-white text-sm focus:border-am-teal outline-none transition-colors" 
                 placeholder="Username" 
                 value={username} 
                 onChange={e => setUsername(e.target.value)}
               />
             )}
             <input 
-              className="w-full bg-[#121212] border border-[#333] p-3 rounded text-white text-sm focus:border-gray-500 outline-none" 
+              className="w-full bg-am-surface border border-am-gray p-3 rounded-lg text-white text-sm focus:border-am-teal outline-none transition-colors" 
               placeholder="Email" 
               value={email} onChange={e => setEmail(e.target.value)}
             />
             <input 
-              className="w-full bg-[#121212] border border-[#333] p-3 rounded text-white text-sm focus:border-gray-500 outline-none" 
+              className="w-full bg-am-surface border border-am-gray p-3 rounded-lg text-white text-sm focus:border-am-teal outline-none transition-colors" 
               placeholder="Password" 
               type="password"
               value={password} onChange={e => setPassword(e.target.value)}
             />
           </div>
 
-          <button onClick={handleEmailAuth} className="w-full bg-[#0095F6] text-white font-semibold py-2 rounded hover:bg-[#1877F2] transition-colors text-sm">
-            {loading ? <Loader2 className="animate-spin mx-auto w-5 h-5"/> : (isSignUp ? "Sign Up" : "Log In")}
+          <button onClick={handleEmailAuth} className="w-full bg-am-teal text-black font-bold py-3 rounded-lg hover:bg-am-tealDark transition-colors text-sm shadow-lg">
+            {loading ? <Loader2 className="animate-spin mx-auto w-5 h-5"/> : (isSignUp ? "Create Account" : "Sign In")}
           </button>
 
           <div className="relative flex items-center py-4">
-            <div className="flex-grow border-t border-[#333]"></div>
-            <span className="flex-shrink-0 mx-4 text-gray-500 text-xs font-bold">OR</span>
-            <div className="flex-grow border-t border-[#333]"></div>
+            <div className="flex-grow border-t border-am-gray"></div>
+            <span className="flex-shrink-0 mx-4 text-gray-500 text-xs font-bold uppercase">or</span>
+            <div className="flex-grow border-t border-am-gray"></div>
           </div>
 
-          <button onClick={handleGoogle} className="w-full flex items-center justify-center gap-2 text-[#0095F6] font-semibold text-sm hover:text-white transition-colors">
+          <button onClick={handleGoogle} className="w-full bg-am-surface border border-am-gray flex items-center justify-center gap-2 text-white font-semibold py-3 rounded-lg hover:bg-[#252525] transition-colors text-sm">
             <GoogleIcon /> Continue with Google
           </button>
         </div>
 
         <div className="text-center mt-4">
           <p className="text-sm text-gray-400">
-            {isSignUp ? "Have an account?" : "Don't have an account?"} 
-            <button onClick={() => setIsSignUp(!isSignUp)} className="text-[#0095F6] ml-1 font-semibold">
-              {isSignUp ? "Log In" : "Sign Up"}
+            {isSignUp ? "Already have an account?" : "New to AlightGram?"} 
+            <button onClick={() => setIsSignUp(!isSignUp)} className="text-am-teal ml-1 font-bold hover:underline">
+              {isSignUp ? "Sign In" : "Create Account"}
             </button>
           </p>
         </div>
@@ -292,26 +298,29 @@ const PostItem: React.FC<{
   };
   
   return (
-    <div className="mb-6 border-b border-[#333] pb-4">
+    <div className="mb-4 bg-am-surface border-y border-am-gray/30 pb-3">
       {/* Header */}
-      <div className="flex justify-between items-center px-3 py-2">
-        <div className="flex items-center gap-2 cursor-pointer" onClick={() => onUserClick(project.userId)}>
-          <img src={project.authorPhoto || "https://via.placeholder.com/32"} className="w-8 h-8 rounded-full object-cover" />
-          <span className="font-semibold text-sm">{project.authorName}</span>
+      <div className="flex justify-between items-center px-4 py-3">
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => onUserClick(project.userId)}>
+          <img src={project.authorPhoto || "https://via.placeholder.com/32"} className="w-9 h-9 rounded-full object-cover border border-am-gray" />
+          <div>
+            <span className="font-bold text-sm block leading-tight">{project.authorName}</span>
+            <span className="text-xs text-am-subtext">{new Date(project.createdAt).toLocaleDateString()}</span>
+          </div>
         </div>
         <div className="flex gap-2 relative">
            {!project.isPublic && <Lock size={14} className="text-gray-500 self-center" />}
-           <button onClick={() => setShowOptions(!showOptions)}>
-             <MoreHorizontal size={20} className="text-white" />
+           <button onClick={() => setShowOptions(!showOptions)} className="p-1">
+             <MoreVertical size={20} className="text-white" />
            </button>
            
            {/* Action Menu */}
            {showOptions && isOwner && (
-              <div className="absolute top-8 right-0 bg-[#262626] border border-[#333] rounded shadow-lg z-10 w-32 py-1">
-                 <button onClick={() => { setShowOptions(false); onEdit(); }} className="w-full text-left px-4 py-2 text-sm hover:bg-[#333] flex items-center gap-2">
-                    <Edit2 size={14}/> Edit
+              <div className="absolute top-8 right-0 bg-[#252525] border border-am-gray rounded-lg shadow-xl z-10 w-36 py-1 overflow-hidden">
+                 <button onClick={() => { setShowOptions(false); onEdit(); }} className="w-full text-left px-4 py-3 text-sm hover:bg-am-gray flex items-center gap-2">
+                    <Edit2 size={14} className="text-am-teal"/> Edit Post
                  </button>
-                 <button className="w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-[#333] flex items-center gap-2">
+                 <button className="w-full text-left px-4 py-3 text-sm text-red-400 hover:bg-am-gray flex items-center gap-2 border-t border-am-gray/50">
                     <X size={14}/> Delete
                  </button>
               </div>
@@ -320,48 +329,51 @@ const PostItem: React.FC<{
       </div>
 
       {/* Media */}
-      <div className="w-full aspect-square bg-[#121212] relative overflow-hidden">
+      <div className="w-full aspect-square bg-[#000] relative overflow-hidden">
         {project.videoUrl ? (
           <CustomVideoPlayer src={project.videoUrl} onDoubleTap={handleLike} />
         ) : (
-          <div className="w-full h-full flex items-center justify-center cursor-pointer" onClick={onOpen}>
-            <FileCode size={48} className="text-gray-600" />
+          <div className="w-full h-full flex items-center justify-center cursor-pointer bg-[#151515]" onClick={onOpen}>
+            <div className="flex flex-col items-center gap-2">
+                <FileCode size={48} className="text-am-teal opacity-50" />
+                <span className="text-xs text-gray-500 font-mono">XML PRESET</span>
+            </div>
           </div>
         )}
       </div>
 
       {/* Action Bar */}
-      <div className="px-3 pt-3 flex justify-between items-center">
-        <div className="flex items-center gap-4">
-          <button onClick={() => { setLiked(!liked); onLike(); }}>
-            <Heart size={24} className={liked || project.likes > 0 ? "fill-red-500 text-red-500" : "text-white hover:text-gray-400"} />
+      <div className="px-4 pt-3 flex justify-between items-center">
+        <div className="flex items-center gap-5">
+          <button onClick={() => { setLiked(!liked); onLike(); }} className="transition-transform active:scale-90">
+            <Heart size={26} className={liked || project.likes > 0 ? "fill-am-teal text-am-teal" : "text-white hover:text-am-teal transition-colors"} />
           </button>
           <button onClick={onOpen}>
-            <MessageCircle size={24} className="text-white hover:text-gray-400 -rotate-90" />
+            <MessageCircle size={26} className="text-white hover:text-am-teal transition-colors -rotate-90" />
           </button>
-          <Send size={24} className="text-white hover:text-gray-400" />
+          <button>
+            <Send size={26} className="text-white hover:text-am-teal transition-colors" />
+          </button>
         </div>
         
         <div className="flex gap-4">
            {(project.isPublic || isOwner) && (
-             <button onClick={() => navigator.clipboard.writeText(project.xmlContent)} className="text-xs font-mono border border-gray-600 rounded px-2 py-1 hover:bg-white hover:text-black transition-colors">
-                Copy XML
+             <button onClick={() => navigator.clipboard.writeText(project.xmlContent)} className="text-xs font-bold text-am-teal bg-am-teal/10 border border-am-teal/50 rounded px-3 py-1.5 hover:bg-am-teal hover:text-black transition-colors">
+                COPY XML
              </button>
            )}
-           <Bookmark size={24} className="text-white hover:text-gray-400" />
         </div>
       </div>
 
       {/* Likes & Caption */}
-      <div className="px-3 py-1 space-y-1">
-        <p className="font-semibold text-sm">{project.likes + (liked ? 1 : 0)} likes</p>
-        <p className="text-sm">
-          <span className="font-semibold mr-2 cursor-pointer" onClick={() => onUserClick(project.userId)}>{project.authorName}</span>
+      <div className="px-4 py-2 space-y-1">
+        <p className="font-bold text-sm text-white">{project.likes + (liked ? 1 : 0)} likes</p>
+        <p className="text-sm text-gray-200">
+          <span className="font-bold mr-2 text-white cursor-pointer" onClick={() => onUserClick(project.userId)}>{project.authorName}</span>
           {project.title}
-          {project.tags?.map(t => <span key={t} className="text-blue-400 ml-1">#{t.replace('#','')}</span>)}
-        </p>
-        <p className="text-xs text-gray-500 uppercase mt-1">
-          {new Date(project.createdAt).toLocaleDateString()}
+          <div className="mt-1">
+            {project.tags?.map(t => <span key={t} className="text-am-teal text-xs mr-2 font-medium">#{t.replace('#','')}</span>)}
+          </div>
         </p>
       </div>
     </div>
@@ -386,9 +398,7 @@ const ProfileView: React.FC<{
   const isOwnProfile = targetUser.uid === currentUser.uid;
 
   useEffect(() => {
-    // PASS currentUser.uid to handle permissions properly!
     getUserProjects(targetUser.uid, currentUser.uid).then(setProjects);
-    
     if (!isOwnProfile) {
       checkIsFollowing(currentUser.uid, targetUser.uid).then(setIsFollowing);
     }
@@ -405,7 +415,7 @@ const ProfileView: React.FC<{
         setIsEditing(false);
         setNewPhoto(null);
     } catch (e) {
-        alert("Failed to upload image. Please try again.");
+        alert("Failed");
     } finally {
         setUploading(false);
     }
@@ -420,83 +430,83 @@ const ProfileView: React.FC<{
         await followUser(currentUser.uid, targetUser.uid);
         setIsFollowing(true);
       }
-    } catch(e) {
-      console.error("Follow toggle failed:", e);
-      alert("Action failed. Please check Firebase Console Rules (see FIREBASE_RULES.md).");
-    }
+    } catch(e) { console.error(e); }
   };
 
   return (
-    <div className="bg-black min-h-screen pb-20">
-      <div className="h-12 border-b border-[#333] flex justify-between items-center px-4 sticky top-0 bg-black z-10">
-        <div className="flex items-center gap-1 font-bold text-lg">
-          <Lock size={14} /> {targetUser.displayName}
+    <div className="bg-am-bg min-h-screen pb-24">
+      {/* Profile Header */}
+      <div className="h-14 border-b border-am-gray flex justify-between items-center px-4 sticky top-0 bg-am-surface/95 backdrop-blur z-10">
+        <div className="font-bold text-lg flex items-center gap-2">
+          {targetUser.displayName} 
+          {isOwnProfile && <div className="w-2 h-2 rounded-full bg-am-teal animate-pulse" />}
         </div>
         {isOwnProfile && (
-           <div className="flex gap-4">
-             <PlusSquare size={24} />
-             <button onClick={onLogout}><LogOut size={24} /></button>
+           <div className="flex gap-4 items-center">
+             <button onClick={onLogout}><LogOut size={22} className="text-gray-400 hover:text-white" /></button>
            </div>
         )}
       </div>
 
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <div className="relative">
-             <img src={targetUser.photoURL || "https://via.placeholder.com/80"} className="w-20 h-20 rounded-full object-cover border border-[#333]" />
+      <div className="p-5">
+        <div className="flex items-center gap-6 mb-6">
+          <div className="relative group">
+             <div className="w-20 h-20 rounded-full p-[2px] bg-gradient-to-tr from-am-teal to-transparent">
+               <img src={targetUser.photoURL || "https://via.placeholder.com/80"} className="w-full h-full rounded-full object-cover border-2 border-black" />
+             </div>
              {isOwnProfile && (
-                <button onClick={() => setIsEditing(!isEditing)} className="absolute bottom-0 right-0 bg-blue-500 rounded-full p-1 border-2 border-black text-white">
-                    <Plus size={12} />
+                <button onClick={() => setIsEditing(!isEditing)} className="absolute bottom-0 right-0 bg-am-surface text-am-teal rounded-full p-1.5 border border-am-gray shadow-md">
+                    <Plus size={14} />
                 </button>
              )}
           </div>
           
           <div className="flex flex-1 justify-around text-center">
-            <div>
-              <div className="font-bold text-lg">{projects.length}</div>
-              <div className="text-sm">Posts</div>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl text-white">{projects.length}</span>
+              <span className="text-xs text-gray-400 uppercase tracking-wide">Posts</span>
             </div>
-            <div>
-              <div className="font-bold text-lg">{targetUser.followers || 0}</div>
-              <div className="text-sm">Followers</div>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl text-white">{targetUser.followers || 0}</span>
+              <span className="text-xs text-gray-400 uppercase tracking-wide">Followers</span>
             </div>
-            <div>
-              <div className="font-bold text-lg">{targetUser.following || 0}</div>
-              <div className="text-sm">Following</div>
+            <div className="flex flex-col">
+              <span className="font-bold text-xl text-white">{targetUser.following || 0}</span>
+              <span className="text-xs text-gray-400 uppercase tracking-wide">Following</span>
             </div>
           </div>
         </div>
 
-        <div className="mb-4">
-          <div className="font-bold">{targetUser.displayName}</div>
-          <div className="text-sm whitespace-pre-wrap">{targetUser.bio || "Digital Creator | Alight Motion Editor"}</div>
+        <div className="mb-6">
+          <h2 className="font-bold text-lg text-white">{targetUser.displayName}</h2>
+          <div className="text-sm text-gray-300 whitespace-pre-wrap leading-relaxed mt-1">{targetUser.bio || "Motion Graphics Designer | XML Creator"}</div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Buttons */}
         {isOwnProfile ? (
             isEditing ? (
-               <div className="flex gap-2 mb-4 items-center">
-                 <input type="file" onChange={e => e.target.files && setNewPhoto(e.target.files[0])} className="text-xs flex-1 text-gray-500" />
-                 <button onClick={handleUpdatePic} disabled={uploading} className="bg-blue-500 text-white px-4 py-1 rounded text-sm font-semibold">
-                    {uploading ? "Uploading..." : "Save"}
+               <div className="flex gap-2 mb-6 items-center p-2 bg-am-surface rounded-lg border border-am-gray">
+                 <input type="file" onChange={e => e.target.files && setNewPhoto(e.target.files[0])} className="text-xs flex-1 text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded-full file:border-0 file:bg-am-teal file:text-black file:font-bold" />
+                 <button onClick={handleUpdatePic} disabled={uploading} className="bg-am-teal text-black px-4 py-1.5 rounded-md text-sm font-bold">
+                    {uploading ? "..." : "Save"}
                  </button>
                </div>
             ) : (
-              <button onClick={() => setIsEditing(true)} className="w-full bg-[#121212] py-1.5 rounded text-sm font-semibold border border-[#333] mb-6">
-                Edit profile
+              <button onClick={() => setIsEditing(true)} className="w-full bg-am-surface text-white py-2 rounded-md text-sm font-semibold border border-am-gray hover:bg-[#2a2a2a] transition-colors mb-6">
+                Edit Profile
               </button>
             )
         ) : (
-            <div className="flex gap-2 mb-6">
+            <div className="flex gap-3 mb-6">
                 <button 
                   onClick={handleFollowToggle}
-                  className={`flex-1 py-1.5 rounded text-sm font-semibold ${isFollowing ? 'bg-[#121212] border border-[#333] text-white' : 'bg-blue-500 text-white'}`}
+                  className={`flex-1 py-2 rounded-md text-sm font-bold transition-colors ${isFollowing ? 'bg-am-surface border border-am-gray text-white' : 'bg-am-teal text-black'}`}
                 >
                   {isFollowing ? 'Following' : 'Follow'}
                 </button>
                 <button 
                   onClick={() => onMessage(targetUser.uid, targetUser.displayName)}
-                  className="flex-1 bg-[#121212] py-1.5 rounded text-sm font-semibold border border-[#333]"
+                  className="flex-1 bg-am-surface py-2 rounded-md text-sm font-semibold border border-am-gray text-white hover:bg-[#2a2a2a]"
                 >
                   Message
                 </button>
@@ -504,17 +514,17 @@ const ProfileView: React.FC<{
         )}
 
         {/* Tabs */}
-        <div className="flex border-t border-[#333]">
-           <button className="flex-1 py-3 border-b border-white flex justify-center"><div className="w-6 h-6 border border-white grid grid-cols-3 gap-[1px] p-[2px]"><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/><div className="bg-white"/></div></button>
-           <button className="flex-1 py-3 flex justify-center text-gray-500"><div className="w-6 h-6 border border-gray-500 rounded flex items-center justify-center"><UserIcon size={14}/></div></button>
+        <div className="flex border-t border-am-gray">
+           <button className="flex-1 py-3 border-b-2 border-white flex justify-center text-white"><Layers size={20}/></button>
+           <button className="flex-1 py-3 flex justify-center text-gray-600"><Bookmark size={20}/></button>
         </div>
 
         {/* Grid */}
-        <div className="grid grid-cols-3 gap-0.5">
+        <div className="grid grid-cols-3 gap-[1px]">
           {projects.map(p => (
-            <div key={p.id} onClick={() => onOpenProject(p)} className="aspect-square bg-[#121212] relative cursor-pointer overflow-hidden">
-              {p.videoUrl ? <video src={p.videoUrl} className="w-full h-full object-cover" /> : <div className="flex h-full items-center justify-center"><FileCode className="text-gray-700"/></div>}
-              {!p.isPublic && <div className="absolute top-1 right-1 bg-black/50 p-1 rounded-full"><Lock size={12}/></div>}
+            <div key={p.id} onClick={() => onOpenProject(p)} className="aspect-square bg-am-surface relative cursor-pointer overflow-hidden border border-black/20 hover:opacity-90 transition-opacity">
+              {p.videoUrl ? <video src={p.videoUrl} className="w-full h-full object-cover" /> : <div className="flex h-full items-center justify-center"><FileCode className="text-am-teal"/></div>}
+              {!p.isPublic && <div className="absolute top-1 right-1 bg-black/60 p-1 rounded-full backdrop-blur-sm"><Lock size={10} className="text-white"/></div>}
             </div>
           ))}
         </div>
@@ -523,46 +533,40 @@ const ProfileView: React.FC<{
   );
 };
 
-// --- Chat Room, Chat List ---
+// --- Chat View Components ---
+// (Keeping mostly same structure, just updating colors)
 const ChatListView: React.FC<{ currentUser: UserProfile, onChatSelect: (uid: string, name: string) => void }> = ({ currentUser, onChatSelect }) => {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [onlineStatus, setOnlineStatus] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    // 1. Get Users
     getAllUsers().then(all => setUsers(all.filter(u => u.uid !== currentUser.uid)));
-
-    // 2. Subscribe to Online Status of ALL users (simplification for this scale)
     const statusRef = ref(rdb, 'status');
     const listener = onValue(statusRef, (snapshot) => {
         const data = snapshot.val();
         if (data) {
             const statusMap: Record<string, boolean> = {};
-            Object.keys(data).forEach(uid => {
-                statusMap[uid] = data[uid].state === 'online';
-            });
+            Object.keys(data).forEach(uid => statusMap[uid] = data[uid].state === 'online');
             setOnlineStatus(statusMap);
         }
     });
-
     return () => off(statusRef);
   }, [currentUser]);
 
   return (
     <div className="p-4 space-y-4">
-      {/* Real Users */}
       {users.map(u => (
-        <div key={u.uid} onClick={() => onChatSelect(u.uid, u.displayName)} className="flex items-center gap-3 cursor-pointer">
+        <div key={u.uid} onClick={() => onChatSelect(u.uid, u.displayName)} className="flex items-center gap-3 cursor-pointer p-2 hover:bg-am-surface rounded-lg transition-colors">
           <div className="relative">
-              <img src={u.photoURL || "https://via.placeholder.com/50"} className="w-12 h-12 rounded-full bg-gray-800 object-cover" />
+              <img src={u.photoURL || "https://via.placeholder.com/50"} className="w-12 h-12 rounded-full bg-am-surface object-cover border border-am-gray" />
               {onlineStatus[u.uid] && (
-                  <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-black rounded-full" />
+                  <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-am-teal border-2 border-black rounded-full" />
               )}
           </div>
           <div>
-            <h3 className="font-semibold text-sm">{u.displayName}</h3>
-            <p className={`text-xs ${onlineStatus[u.uid] ? 'text-green-500 font-semibold' : 'text-gray-500'}`}>
-                {onlineStatus[u.uid] ? 'Active now' : 'Offline'}
+            <h3 className="font-bold text-sm text-white">{u.displayName}</h3>
+            <p className={`text-xs ${onlineStatus[u.uid] ? 'text-am-teal font-medium' : 'text-gray-500'}`}>
+                {onlineStatus[u.uid] ? 'Online' : 'Offline'}
             </p>
           </div>
         </div>
@@ -593,29 +597,23 @@ const ChatRoomView: React.FC<{ currentUser: UserProfile, targetUid: string, targ
     if (!input.trim()) return;
     const text = input;
     setInput('');
-    
-    try {
-      await sendMessage(chatId, currentUser.uid, text);
-    } catch (e) {
-      console.error("Send failed", e);
-      alert("Failed to send message. Please check your connection.");
-    }
+    try { await sendMessage(chatId, currentUser.uid, text); } catch (e) { alert("Failed"); }
   };
 
   return (
-    <div className="flex flex-col h-full bg-black">
-      <div className="h-12 flex items-center px-4 border-b border-[#333]">
-        <button onClick={onBack}><ArrowLeft className="mr-4"/></button>
-        <span className="font-bold flex items-center gap-2">
+    <div className="flex flex-col h-full bg-am-bg">
+      <div className="h-14 flex items-center px-4 border-b border-am-gray bg-am-surface">
+        <button onClick={onBack}><ArrowLeft className="mr-4 text-white"/></button>
+        <span className="font-bold flex items-center gap-2 text-white">
            {targetName}
         </span>
       </div>
-      <div className="flex-1 overflow-y-auto p-4 space-y-2">
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
         {messages.map(m => {
           const isMe = m.senderId === currentUser.uid;
           return (
             <div key={m.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[70%] px-4 py-2 rounded-2xl text-sm ${isMe ? 'bg-[#3797F0] text-white' : 'bg-[#262626] text-white'}`}>
+              <div className={`max-w-[75%] px-4 py-2 rounded-2xl text-sm ${isMe ? 'bg-am-teal text-black font-medium' : 'bg-am-surface text-white border border-am-gray'}`}>
                 {m.text}
               </div>
             </div>
@@ -623,20 +621,23 @@ const ChatRoomView: React.FC<{ currentUser: UserProfile, targetUid: string, targ
         })}
         <div ref={bottomRef} />
       </div>
-      <div className="p-3 bg-black flex gap-2">
+      <div className="p-3 bg-am-surface flex gap-2 border-t border-am-gray">
         <input 
-          className="flex-1 bg-[#262626] rounded-full px-4 py-2 outline-none text-sm text-white"
+          className="flex-1 bg-black rounded-full px-5 py-2.5 outline-none text-sm text-white border border-am-gray focus:border-am-teal transition-colors"
           placeholder="Message..."
           value={input}
           onChange={e => setInput(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleSend()}
         />
-        <button onClick={handleSend} className="text-[#3797F0] font-semibold text-sm p-2">Send</button>
+        <button onClick={handleSend} className="bg-am-teal text-black rounded-full p-2.5 font-bold hover:bg-am-tealDark transition-colors">
+            <Send size={18} />
+        </button>
       </div>
     </div>
   );
 };
 
+// --- Add Project / Editor View ---
 const AddProjectView: React.FC<{ user: UserProfile, onCancel: () => void, onSuccess?: () => void }> = ({ user, onCancel, onSuccess }) => {
   const [title, setTitle] = useState('');
   const [xml, setXml] = useState('');
@@ -653,9 +654,7 @@ const AddProjectView: React.FC<{ user: UserProfile, onCancel: () => void, onSucc
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      if(ev.target?.result) setXml(ev.target.result as string);
-    };
+    reader.onload = (ev) => { if(ev.target?.result) setXml(ev.target.result as string); };
     reader.readAsText(file);
   };
 
@@ -663,10 +662,8 @@ const AddProjectView: React.FC<{ user: UserProfile, onCancel: () => void, onSucc
     if (!title || !xml) return alert("Title and XML required");
     setLoading(true);
     let vUrl = '';
-    if (videoFile) {
-      vUrl = await uploadToCloudinary(videoFile, 'My smallest server');
-    }
-
+    if (videoFile) vUrl = await uploadToCloudinary(videoFile, 'My smallest server');
+    
     await createProject({
       title,
       xmlContent: xml,
@@ -685,48 +682,56 @@ const AddProjectView: React.FC<{ user: UserProfile, onCancel: () => void, onSucc
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex gap-4">
-         <div className="w-24 h-24 bg-[#262626] flex items-center justify-center cursor-pointer relative" onClick={() => document.getElementById('v-upload')?.click()}>
-            {videoFile ? <video src={URL.createObjectURL(videoFile)} className="w-full h-full object-cover"/> : <Plus/>}
+         <div className="w-28 h-28 bg-am-surface border border-am-gray rounded-lg flex items-center justify-center cursor-pointer relative overflow-hidden group" onClick={() => document.getElementById('v-upload')?.click()}>
+            {videoFile ? <video src={URL.createObjectURL(videoFile)} className="w-full h-full object-cover"/> : (
+                <div className="flex flex-col items-center gap-1">
+                    <div className="bg-am-teal p-2 rounded-full text-black"><Plus size={20}/></div>
+                    <span className="text-[10px] text-gray-400 font-bold uppercase">Video</span>
+                </div>
+            )}
             <input type="file" id="v-upload" className="hidden" accept="video/*" onChange={e => e.target.files && setVideoFile(e.target.files[0])} />
          </div>
-         <div className="flex-1 space-y-2">
-            <input className="w-full bg-transparent border-b border-[#333] p-2 outline-none" placeholder="Write a caption / title..." value={title} onChange={e => setTitle(e.target.value)} />
-            <div className="flex gap-2">
-               <button onClick={handleGenTags} className="text-xs text-blue-500">Auto Tags</button>
-               {tags.map(t => <span key={t} className="text-xs text-gray-500">{t}</span>)}
+         <div className="flex-1 space-y-3 pt-2">
+            <input className="w-full bg-transparent border-b border-am-gray p-2 outline-none text-white font-medium focus:border-am-teal transition-colors" placeholder="Project Name..." value={title} onChange={e => setTitle(e.target.value)} />
+            <div className="flex gap-2 flex-wrap">
+               <button onClick={handleGenTags} className="text-xs bg-am-teal/20 text-am-teal px-2 py-1 rounded border border-am-teal/30 hover:bg-am-teal/30">Auto Tags</button>
+               {tags.map(t => <span key={t} className="text-xs text-gray-400 bg-am-surface px-2 py-1 rounded">{t}</span>)}
             </div>
          </div>
       </div>
       
-      <div>
-         <div className="flex justify-between items-center mb-2">
-            <span className="text-sm font-semibold">Project XML</span>
-            <label className="text-xs bg-[#262626] border border-[#333] px-2 py-1 rounded cursor-pointer hover:bg-[#333]">
-               <Upload size={12} className="inline mr-1" /> Upload .xml
+      <div className="bg-am-surface p-3 rounded-lg border border-am-gray">
+         <div className="flex justify-between items-center mb-2 border-b border-am-gray/50 pb-2">
+            <span className="text-xs font-bold text-gray-300 uppercase">XML Configuration</span>
+            <label className="text-xs bg-[#252525] border border-am-gray px-2 py-1 rounded cursor-pointer hover:bg-am-gray text-am-teal font-bold">
+               <Upload size={12} className="inline mr-1" /> Import .xml
                <input type="file" accept=".xml" className="hidden" onChange={handleXmlFileUpload} />
             </label>
          </div>
-         <textarea className="w-full h-32 bg-[#262626] p-2 rounded text-xs font-mono" placeholder="Paste XML Code here..." value={xml} onChange={e => setXml(e.target.value)} />
+         <textarea className="w-full h-40 bg-black/50 p-2 rounded text-[10px] font-mono text-am-teal border border-am-gray/30 focus:border-am-teal/50 outline-none xml-scroll" placeholder="<data>...</data>" value={xml} onChange={e => setXml(e.target.value)} />
       </div>
 
-      <div className="flex justify-between items-center text-sm p-3 border-y border-[#333]">
-         <div className="flex items-center gap-2">
-            {isPublic ? <Globe size={18} /> : <Lock size={18} />}
+      <div className="flex justify-between items-center text-sm p-4 bg-am-surface rounded-lg border border-am-gray">
+         <div className="flex items-center gap-2 font-medium">
+            {isPublic ? <Globe size={18} className="text-am-teal" /> : <Lock size={18} className="text-gray-400" />}
             <span>{isPublic ? "Public Project" : "Private Project"}</span>
          </div>
-         <div className={`w-10 h-6 rounded-full p-1 cursor-pointer transition-colors ${isPublic ? 'bg-blue-500' : 'bg-gray-600'}`} onClick={() => setIsPublic(!isPublic)}>
-            <div className={`w-4 h-4 bg-white rounded-full transform transition-transform ${isPublic ? 'translate-x-4' : ''}`} />
+         <div className={`w-10 h-6 rounded-full p-1 cursor-pointer transition-colors ${isPublic ? 'bg-am-teal' : 'bg-gray-700'}`} onClick={() => setIsPublic(!isPublic)}>
+            <div className={`w-4 h-4 bg-white rounded-full transform transition-transform shadow-md ${isPublic ? 'translate-x-4' : ''}`} />
          </div>
       </div>
 
-      <button onClick={handleSave} className="w-full text-blue-500 font-bold py-2">{loading ? "Sharing..." : "Share"}</button>
+      <button onClick={handleSave} className="w-full bg-am-teal text-black font-bold py-3 rounded-lg shadow-lg hover:bg-am-tealDark transition-colors flex items-center justify-center gap-2">
+          {loading ? "Processing..." : "Publish Project"}
+      </button>
     </div>
   );
 };
 
 const EditProjectView: React.FC<{ project: Project, onCancel: () => void, onSuccess: () => void }> = ({ project, onCancel, onSuccess }) => {
+    // Reusing AddProject styling logic essentially
   const [title, setTitle] = useState(project.title);
   const [xml, setXml] = useState(project.xmlContent);
   const [isPublic, setIsPublic] = useState(project.isPublic);
@@ -734,11 +739,7 @@ const EditProjectView: React.FC<{ project: Project, onCancel: () => void, onSucc
 
   const handleSave = async () => {
     setLoading(true);
-    await updateProject(project.id, {
-      title,
-      xmlContent: xml,
-      isPublic
-    });
+    await updateProject(project.id, { title, xmlContent: xml, isPublic });
     setLoading(false);
     onSuccess();
   };
@@ -747,46 +748,41 @@ const EditProjectView: React.FC<{ project: Project, onCancel: () => void, onSucc
     const file = e.target.files?.[0];
     if (!file) return;
     const reader = new FileReader();
-    reader.onload = (ev) => {
-      if(ev.target?.result) setXml(ev.target.result as string);
-    };
+    reader.onload = (ev) => { if(ev.target?.result) setXml(ev.target.result as string); };
     reader.readAsText(file);
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="p-4 space-y-6">
       <div className="flex justify-between mb-4">
          <h2 className="font-bold text-lg">Edit Info</h2>
-         <button onClick={onCancel}><X/></button>
+         <button onClick={onCancel}><X className="text-gray-400"/></button>
       </div>
       
       <div className="space-y-2">
-        <label className="text-xs text-gray-400">Title</label>
-        <input className="w-full bg-[#262626] border border-[#333] p-2 rounded text-white" value={title} onChange={e => setTitle(e.target.value)} />
+        <label className="text-xs font-bold text-gray-500 uppercase">Project Title</label>
+        <input className="w-full bg-am-surface border border-am-gray p-3 rounded text-white focus:border-am-teal outline-none" value={title} onChange={e => setTitle(e.target.value)} />
       </div>
 
       <div>
          <div className="flex justify-between items-center mb-2">
-            <span className="text-xs text-gray-400">XML Content</span>
-            <label className="text-xs bg-[#262626] border border-[#333] px-2 py-1 rounded cursor-pointer hover:bg-[#333]">
-               <Upload size={12} className="inline mr-1" /> Replace .xml
-               <input type="file" accept=".xml" className="hidden" onChange={handleXmlFileUpload} />
-            </label>
+            <label className="text-xs font-bold text-gray-500 uppercase">XML Data</label>
+            <label className="text-xs text-am-teal cursor-pointer font-bold">Import File <input type="file" accept=".xml" className="hidden" onChange={handleXmlFileUpload} /></label>
          </div>
-         <textarea className="w-full h-32 bg-[#262626] p-2 rounded text-xs font-mono" value={xml} onChange={e => setXml(e.target.value)} />
+         <textarea className="w-full h-32 bg-am-surface border border-am-gray p-2 rounded text-xs font-mono text-am-teal" value={xml} onChange={e => setXml(e.target.value)} />
       </div>
 
-      <div className="flex justify-between items-center text-sm p-3 border-y border-[#333]">
+      <div className="flex justify-between items-center text-sm p-3 border-y border-am-gray">
          <div className="flex items-center gap-2">
             {isPublic ? <Globe size={18} /> : <Lock size={18} />}
             <span>{isPublic ? "Public" : "Private"}</span>
          </div>
-         <div className={`w-10 h-6 rounded-full p-1 cursor-pointer transition-colors ${isPublic ? 'bg-blue-500' : 'bg-gray-600'}`} onClick={() => setIsPublic(!isPublic)}>
+         <div className={`w-10 h-6 rounded-full p-1 cursor-pointer transition-colors ${isPublic ? 'bg-am-teal' : 'bg-gray-600'}`} onClick={() => setIsPublic(!isPublic)}>
             <div className={`w-4 h-4 bg-white rounded-full transform transition-transform ${isPublic ? 'translate-x-4' : ''}`} />
          </div>
       </div>
 
-      <button onClick={handleSave} className="w-full bg-blue-500 text-white font-bold py-2 rounded">{loading ? "Saving..." : "Save Changes"}</button>
+      <button onClick={handleSave} className="w-full bg-am-teal text-black font-bold py-3 rounded">{loading ? "Saving..." : "Save Changes"}</button>
     </div>
   );
 };
@@ -821,10 +817,10 @@ const ProjectDetailsView: React.FC<{
   };
 
   return (
-    <div className="bg-black min-h-screen pb-20">
-       <div className="h-12 flex items-center px-4 border-b border-[#333] sticky top-0 bg-black z-20">
-         <button onClick={onBack}><ArrowLeft className="mr-4"/></button>
-         <span className="font-bold text-sm uppercase">Posts</span>
+    <div className="bg-am-bg min-h-screen pb-20">
+       <div className="h-14 flex items-center px-4 border-b border-am-gray sticky top-0 bg-am-surface/95 backdrop-blur z-20">
+         <button onClick={onBack}><ArrowLeft className="mr-4 text-white"/></button>
+         <span className="font-bold text-sm uppercase text-white tracking-widest">Post Details</span>
        </div>
        <PostItem 
          project={project} 
@@ -835,22 +831,22 @@ const ProjectDetailsView: React.FC<{
          onEdit={onEdit}
        />
        <div className="px-4">
-         <h3 className="font-bold mb-4">Comments</h3>
+         <h3 className="font-bold mb-4 text-am-teal text-sm uppercase tracking-wide">Comments</h3>
          <div className="space-y-4 mb-20">
             {comments.map(c => (
-              <div key={c.id} className="flex gap-3">
-                 <img src={c.userPhoto || "https://via.placeholder.com/30"} className="w-8 h-8 rounded-full" />
+              <div key={c.id} className="flex gap-3 bg-am-surface p-3 rounded-lg border border-am-gray/50">
+                 <img src={c.userPhoto || "https://via.placeholder.com/30"} className="w-8 h-8 rounded-full border border-gray-600" />
                  <div>
-                    <p className="text-sm"><span className="font-semibold mr-2">{c.userName}</span>{c.text}</p>
+                    <p className="text-sm"><span className="font-bold mr-2 text-white">{c.userName}</span><span className="text-gray-300">{c.text}</span></p>
                  </div>
               </div>
             ))}
          </div>
        </div>
-       <div className="fixed bottom-0 left-0 right-0 bg-black border-t border-[#333] p-3 flex gap-2 max-w-md mx-auto">
-          <img src={currentUser.photoURL || "https://via.placeholder.com/30"} className="w-8 h-8 rounded-full" />
-          <input className="flex-1 bg-transparent outline-none text-sm" placeholder={`Add a comment as ${currentUser.displayName}...`} value={newComment} onChange={e => setNewComment(e.target.value)} />
-          <button onClick={handleSendComment} className="text-blue-500 text-sm font-semibold">Post</button>
+       <div className="fixed bottom-0 left-0 right-0 bg-am-surface border-t border-am-gray p-3 flex gap-2 max-w-md mx-auto z-30">
+          <img src={currentUser.photoURL || "https://via.placeholder.com/30"} className="w-8 h-8 rounded-full border border-gray-500" />
+          <input className="flex-1 bg-black outline-none text-sm px-3 rounded-full border border-am-gray focus:border-am-teal" placeholder={`Add a comment...`} value={newComment} onChange={e => setNewComment(e.target.value)} />
+          <button onClick={handleSendComment} className="text-am-teal text-sm font-bold uppercase px-2">Post</button>
        </div>
     </div>
   );
@@ -880,13 +876,13 @@ const SearchView: React.FC<{
   );
 
   return (
-    <div className="pb-16 pt-2">
-       <div className="px-4 mb-2">
-         <div className="bg-[#262626] rounded-lg p-2 flex items-center gap-2 text-gray-400">
-           <Search size={16} /> 
+    <div className="pb-24 pt-2">
+       <div className="px-4 mb-4 sticky top-2 z-10">
+         <div className="bg-am-surface rounded-xl p-2.5 flex items-center gap-2 text-gray-400 border border-am-gray shadow-md">
+           <Search size={18} /> 
            <input 
-             className="bg-transparent outline-none text-sm flex-1 text-white" 
-             placeholder="Search" 
+             className="bg-transparent outline-none text-sm flex-1 text-white font-medium placeholder-gray-500" 
+             placeholder="Search tags, users, projects..." 
              value={query}
              onChange={e => setQuery(e.target.value)}
            />
@@ -894,37 +890,47 @@ const SearchView: React.FC<{
        </div>
 
        {/* Tabs */}
-       <div className="flex border-b border-[#333] mb-2 px-4 gap-6">
+       <div className="flex border-b border-am-gray mb-2 px-4 gap-6">
           <button 
-            className={`py-2 text-sm font-semibold ${tab === 'projects' ? 'text-white border-b-2 border-white' : 'text-gray-500'}`}
+            className={`py-2 text-sm font-bold uppercase tracking-wide transition-colors ${tab === 'projects' ? 'text-am-teal border-b-2 border-am-teal' : 'text-gray-500 hover:text-white'}`}
             onClick={() => setTab('projects')}
           >
             Projects
           </button>
           <button 
-            className={`py-2 text-sm font-semibold ${tab === 'people' ? 'text-white border-b-2 border-white' : 'text-gray-500'}`}
+            className={`py-2 text-sm font-bold uppercase tracking-wide transition-colors ${tab === 'people' ? 'text-am-teal border-b-2 border-am-teal' : 'text-gray-500 hover:text-white'}`}
             onClick={() => setTab('people')}
           >
-            People
+            Creators
           </button>
        </div>
 
        {tab === 'projects' ? (
-         <div className="grid grid-cols-3 gap-0.5">
+         <div className="grid grid-cols-2 gap-2 px-2">
            {filteredProjects.map(p => (
-             <div key={p.id} onClick={() => onProjectSelect(p)} className="aspect-[4/5] bg-[#121212] relative cursor-pointer">
-               {p.videoUrl ? <video src={p.videoUrl} className="w-full h-full object-cover" /> : <div className="flex h-full items-center justify-center"><FileCode className="text-gray-700"/></div>}
+             <div key={p.id} onClick={() => onProjectSelect(p)} className="aspect-[16/9] bg-am-surface relative cursor-pointer rounded-lg overflow-hidden border border-am-gray hover:border-am-teal transition-colors group">
+               {p.videoUrl ? (
+                   <video src={p.videoUrl} className="w-full h-full object-cover" />
+               ) : (
+                   <div className="flex h-full flex-col items-center justify-center bg-[#181818]">
+                       <FileCode className="text-am-teal mb-2 group-hover:scale-110 transition-transform"/>
+                       <span className="text-[10px] text-gray-400 font-mono">{p.title.substring(0,10)}..</span>
+                   </div>
+               )}
+               <div className="absolute bottom-0 left-0 right-0 p-2 bg-gradient-to-t from-black to-transparent">
+                  <p className="text-xs font-bold truncate text-white">{p.title}</p>
+               </div>
              </div>
            ))}
          </div>
        ) : (
-         <div className="px-4 space-y-4 mt-4">
+         <div className="px-4 space-y-3 mt-4">
            {filteredUsers.map(u => (
-             <div key={u.uid} onClick={() => onUserSelect(u.uid)} className="flex items-center gap-3 cursor-pointer">
-               <img src={u.photoURL || "https://via.placeholder.com/50"} className="w-12 h-12 rounded-full bg-gray-800 object-cover" />
+             <div key={u.uid} onClick={() => onUserSelect(u.uid)} className="flex items-center gap-3 cursor-pointer bg-am-surface p-2 rounded-lg border border-am-gray hover:border-am-teal transition-colors">
+               <img src={u.photoURL || "https://via.placeholder.com/50"} className="w-10 h-10 rounded-full bg-black object-cover" />
                <div>
-                 <h3 className="font-semibold text-sm">{u.displayName}</h3>
-                 <p className="text-xs text-gray-500">{u.followers || 0} followers</p>
+                 <h3 className="font-bold text-sm text-white">{u.displayName}</h3>
+                 <p className="text-xs text-am-teal">{u.followers || 0} followers</p>
                </div>
              </div>
            ))}
@@ -938,17 +944,11 @@ const SearchView: React.FC<{
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
-  
-  // Navigation State
   const [view, setView] = useState<ViewState>(ViewState.AUTH);
-  const [editMode, setEditMode] = useState(false); // New state for editing
-  
-  // Content State
+  const [editMode, setEditMode] = useState(false);
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [chatTarget, setChatTarget] = useState<{uid: string, name: string} | null>(null);
-  
-  // "Viewed User" State (for visiting other profiles)
   const [viewedUser, setViewedUser] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -957,15 +957,11 @@ export default function App() {
     setProjects(projs);
   };
 
-  // Data Fetching
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (fbUser) => {
       if (fbUser) {
-        // Fetch full profile from Firestore to get the correct photoURL (Cloudinary)
         let profile = await getUserProfile(fbUser.uid);
-        
         if (!profile) {
-            // New user, create basic profile
             profile = { 
                 uid: fbUser.uid, 
                 displayName: fbUser.displayName || 'User', 
@@ -973,17 +969,11 @@ export default function App() {
                 photoURL: fbUser.photoURL || '' 
             };
         }
-        
-        // Use the profile from DB, not just fbUser which might have stale/empty photo
         setCurrentUser(profile);
         setViewedUser(profile); 
         setView(ViewState.FEED);
-        
-        // Initialize Realtime Presence
         setupPresence(fbUser.uid);
-        
         await fetchFeed();
-
       } else {
         setCurrentUser(null);
         setView(ViewState.AUTH);
@@ -1003,29 +993,28 @@ export default function App() {
     setLoading(false);
   };
 
-  if (loading) return <div className="min-h-screen bg-black flex items-center justify-center"><Loader2 className="animate-spin text-[#00D2BE]"/></div>;
+  if (loading) return <div className="min-h-screen bg-am-bg flex items-center justify-center"><Loader2 className="animate-spin text-am-teal w-10 h-10"/></div>;
 
   if (!currentUser || view === ViewState.AUTH) {
     return <AuthView onLogin={() => {}} />;
   }
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans max-w-md mx-auto border-x border-[#333] relative">
+    <div className="min-h-screen bg-am-bg text-white font-sans max-w-md mx-auto border-x border-am-gray relative shadow-2xl">
       <AnimatePresence mode="wait">
         
         {view === ViewState.FEED && !editMode && (
           <motion.div key="feed" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
-            <div className="h-12 flex justify-between items-center px-4 sticky top-0 bg-black z-20 border-b border-[#333]">
-              <h1 className="text-2xl font-serif italic tracking-wide">AlightGram</h1>
-              <div className="flex gap-4">
-                <Heart size={24} />
+            <div className="h-14 flex justify-between items-center px-4 sticky top-0 bg-am-bg/95 backdrop-blur z-20 border-b border-am-gray/50">
+              <h1 className="text-xl font-extrabold italic tracking-tighter text-white">Alight<span className="text-am-teal">Gram</span></h1>
+              <div className="flex gap-5">
                 <button onClick={() => setView(ViewState.CHAT_LIST)}>
-                  <MessageCircle size={24} className="-rotate-12" />
+                  <MessageCircle size={24} className="text-white hover:text-am-teal transition-colors" />
                 </button>
               </div>
             </div>
 
-            <div className="pb-16 mt-4">
+            <div className="pb-24 mt-0">
               {projects.map(p => (
                 <PostItem 
                   key={p.id} 
@@ -1043,12 +1032,14 @@ export default function App() {
 
         {/* Edit Modal Overlay */}
         {editMode && activeProject && (
-           <motion.div key="edit" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="fixed inset-0 bg-black z-50 overflow-y-auto">
-              <EditProjectView 
-                 project={activeProject} 
-                 onCancel={() => { setEditMode(false); setActiveProject(null); }} 
-                 onSuccess={() => { setEditMode(false); setActiveProject(null); fetchFeed(); }} 
-              />
+           <motion.div key="edit" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="fixed inset-0 bg-black/90 z-50 overflow-y-auto flex items-center justify-center p-4">
+              <div className="bg-am-surface w-full max-w-sm rounded-xl border border-am-gray shadow-2xl overflow-hidden">
+                <EditProjectView 
+                   project={activeProject} 
+                   onCancel={() => { setEditMode(false); setActiveProject(null); }} 
+                   onSuccess={() => { setEditMode(false); setActiveProject(null); fetchFeed(); }} 
+                />
+              </div>
            </motion.div>
         )}
 
@@ -1063,12 +1054,12 @@ export default function App() {
         )}
 
         {view === ViewState.ADD_PROJECT && (
-           <div className="p-4">
-             <div className="flex justify-between mb-4">
-                <h2 className="font-bold text-lg">New Post</h2>
-                <button onClick={() => setView(ViewState.FEED)}><X/></button>
+           <div className="p-5 min-h-screen bg-am-bg">
+             <div className="flex justify-between mb-6 items-center">
+                <h2 className="font-bold text-xl flex items-center gap-2"><PlusSquare className="text-am-teal"/> New Project</h2>
+                <button onClick={() => setView(ViewState.FEED)} className="bg-am-surface p-1 rounded-full"><X size={20}/></button>
              </div>
-             <div className="h-[80vh] overflow-y-auto">
+             <div className="h-[80vh] overflow-y-auto pb-20">
                 <AddProjectView 
                   user={currentUser} 
                   onCancel={() => setView(ViewState.FEED)} 
@@ -1098,23 +1089,23 @@ export default function App() {
         )}
 
         {view === ViewState.CHAT_LIST && (
-           <motion.div key="chatlist" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.2, ease: "easeInOut" }} className="fixed inset-0 bg-black z-30">
-               <div className="h-12 flex items-center px-4 border-b border-[#333]">
-                 <button onClick={() => setView(ViewState.FEED)}><ArrowLeft className="mr-4"/></button>
-                 <span className="font-bold">{currentUser.displayName}</span>
+           <motion.div key="chatlist" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.2, ease: "easeInOut" }} className="fixed inset-0 bg-am-bg z-30">
+               <div className="h-14 flex items-center px-4 border-b border-am-gray bg-am-surface">
+                 <button onClick={() => setView(ViewState.FEED)}><ArrowLeft className="mr-4 text-white"/></button>
+                 <span className="font-bold text-white text-lg">Messages</span>
                </div>
                <ChatListView currentUser={currentUser} onChatSelect={(uid, name) => { setChatTarget({uid, name}); setView(ViewState.CHAT_ROOM); }} />
            </motion.div>
         )}
 
         {view === ViewState.CHAT_ROOM && chatTarget && (
-           <motion.div key="chatroom" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.2, ease: "easeInOut" }} className="fixed inset-0 bg-black z-40">
+           <motion.div key="chatroom" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.2, ease: "easeInOut" }} className="fixed inset-0 bg-am-bg z-40">
                <ChatRoomView currentUser={currentUser} targetUid={chatTarget.uid} targetName={chatTarget.name} onBack={() => setView(ViewState.CHAT_LIST)} />
            </motion.div>
         )}
         
         {view === ViewState.PROJECT_DETAILS && activeProject && !editMode && (
-           <motion.div key="details" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.2, ease: "easeInOut" }} className="fixed inset-0 bg-black z-30 overflow-y-auto">
+           <motion.div key="details" initial={{ x: '100%' }} animate={{ x: 0 }} exit={{ x: '100%' }} transition={{ duration: 0.2, ease: "easeInOut" }} className="fixed inset-0 bg-am-bg z-30 overflow-y-auto">
               <ProjectDetailsView 
                 project={activeProject} 
                 currentUser={currentUser} 
@@ -1127,25 +1118,37 @@ export default function App() {
 
       </AnimatePresence>
 
+      {/* Alight Motion Style Bottom Navigation */}
       {(view === ViewState.FEED || view === ViewState.SEARCH || view === ViewState.PROFILE) && !editMode && (
-        <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto h-12 bg-black border-t border-[#333] flex items-center justify-around z-50">
-           <button onClick={() => setView(ViewState.FEED)} className={view === ViewState.FEED ? "text-white" : "text-gray-500"}>
-             <Home size={26} strokeWidth={view === ViewState.FEED ? 3 : 2} />
+        <div className="fixed bottom-0 left-0 right-0 max-w-md mx-auto h-[60px] bg-am-surface border-t border-am-gray flex items-center justify-around z-50 shadow-[0_-5px_15px_rgba(0,0,0,0.5)]">
+           <button onClick={() => setView(ViewState.FEED)} className="flex flex-col items-center gap-1 w-12">
+             <Home size={22} className={view === ViewState.FEED ? "text-am-teal" : "text-gray-500"} strokeWidth={view === ViewState.FEED ? 3 : 2} />
+             <span className={`text-[10px] font-bold ${view === ViewState.FEED ? "text-am-teal" : "text-gray-500"}`}>Home</span>
            </button>
-           <button onClick={() => setView(ViewState.SEARCH)} className={view === ViewState.SEARCH ? "text-white" : "text-gray-500"}>
-             <Search size={26} strokeWidth={view === ViewState.SEARCH ? 3 : 2} />
+           
+           <button onClick={() => setView(ViewState.SEARCH)} className="flex flex-col items-center gap-1 w-12">
+             <Search size={22} className={view === ViewState.SEARCH ? "text-am-teal" : "text-gray-500"} strokeWidth={view === ViewState.SEARCH ? 3 : 2} />
+             <span className={`text-[10px] font-bold ${view === ViewState.SEARCH ? "text-am-teal" : "text-gray-500"}`}>Find</span>
            </button>
-           <button onClick={() => setView(ViewState.ADD_PROJECT)} className="text-white">
-             <PlusSquare size={26} />
+           
+           {/* Center FAB */}
+           <button onClick={() => setView(ViewState.ADD_PROJECT)} className="-mt-8 bg-am-teal p-3.5 rounded-2xl shadow-[0_0_15px_rgba(0,210,190,0.4)] hover:scale-105 transition-transform border-4 border-am-bg">
+             <Plus size={28} className="text-black" strokeWidth={3} />
            </button>
-           <button className="text-gray-500">
-             <Video size={26} />
+           
+           <button className="flex flex-col items-center gap-1 w-12">
+             <Zap size={22} className="text-gray-500" />
+             <span className="text-[10px] font-bold text-gray-500">Learn</span>
            </button>
+           
            <button onClick={() => {
                setViewedUser(currentUser);
                setView(ViewState.PROFILE);
-           }}>
-             <img src={currentUser.photoURL || "https://via.placeholder.com/24"} className={`w-6 h-6 rounded-full border-2 ${view === ViewState.PROFILE && viewedUser?.uid === currentUser.uid ? "border-white" : "border-transparent"}`} />
+           }} className="flex flex-col items-center gap-1 w-12">
+             <div className={`p-[1px] rounded-full ${view === ViewState.PROFILE && viewedUser?.uid === currentUser.uid ? "border border-am-teal" : "border border-transparent"}`}>
+                <img src={currentUser.photoURL || "https://via.placeholder.com/24"} className="w-5 h-5 rounded-full" />
+             </div>
+             <span className={`text-[10px] font-bold ${view === ViewState.PROFILE && viewedUser?.uid === currentUser.uid ? "text-am-teal" : "text-gray-500"}`}>Me</span>
            </button>
         </div>
       )}

@@ -17,14 +17,15 @@
         theme: {
           extend: {
             colors: {
+              // Alight Motion Palette
               am: {
-                bg: '#121212',       // Main background
-                surface: '#1E1E1E',  // Card/Nav background
-                primary: '#00D2BE',  // AM Teal
-                primaryDark: '#00A696',
+                bg: '#121212',       // Deep Background
+                surface: '#1E1E1E',  // Card/Bar Background
+                teal: '#00D2BE',     // Signature Green/Teal
+                tealDark: '#00A696',
+                gray: '#353535',     // Borders/Inputs
                 text: '#FFFFFF',
-                subtext: '#AAAAAA',
-                divider: '#333333'
+                subtext: '#9CA3AF'
               }
             },
             fontFamily: {
@@ -34,13 +35,13 @@
         }
       }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-      body { background-color: #121212; color: white; }
+      body { background-color: #121212; color: white; font-family: 'Inter', sans-serif; }
       /* Custom scrollbar for XML viewer */
       .xml-scroll::-webkit-scrollbar { width: 8px; height: 8px; }
       .xml-scroll::-webkit-scrollbar-track { background: #1E1E1E; }
-      .xml-scroll::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+      .xml-scroll::-webkit-scrollbar-thumb { background: #353535; border-radius: 4px; }
       .xml-scroll::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
   <script type="importmap">
