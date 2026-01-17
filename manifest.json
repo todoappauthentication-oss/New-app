@@ -1,0 +1,21 @@
+{
+  "name": "AlightGram",
+  "short_name": "AlightGram",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#121212",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://i.postimg.cc/sDHVRHmT/Tiktok-Galaxy-Gift-Icon.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg"
+    },
+    {
+      "src": "https://i.postimg.cc/sDHVRHmT/Tiktok-Galaxy-Gift-Icon.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}
